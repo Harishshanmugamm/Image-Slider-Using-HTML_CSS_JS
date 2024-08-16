@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+        }
+        .active {
+            display: block;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .dots-container {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active-dot {
+            background-color: #717171;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slider-container">
+    <img src="./images/ele.jpg" class="slide active" alt="Image 1">
+    <img src="./images/lake1.jpg" class="slide" alt="Image 2">
+    <img src="./images/nasa.jpg" class="slide" alt="Image 3">
+    <a class="prev" onclick="change(-1)">&#10094;</a>
+    <a class="next" onclick="change(1)">&#10095;</a>
+</div>
+
+<div class="dots-container">
+    <span class="dot active-dot" onclick="current(1)"></span> 
+    <span class="dot" onclick="current(2)"></span> 
+    <span class="dot" onclick="current(3)"></span> 
+</div>
+
+<script>
+    let slideIndex = 1;
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        if (index > slides.length) { slideIndex = 1; }
+        if (index < 1) { slideIndex = slides.length; }
+
+        slides.forEach(slide => slide.style.display = 'none');
+        dots.forEach(dot => dot.className = dot.className.replace(' active-dot', ''));
+
+        slides[slideIndex - 1].style.display = 'block';
+        dots[slideIndex - 1].className += ' active-dot';
+    }
+
+    function change(n) {
+        showSlide(slideIndex += n);
+    }
+
+    function current(n) {
+        showSlide(slideIndex = n);
+    }
+
+    showSlide(slideIndex);
+</script>
+
+</body>
+</html>
